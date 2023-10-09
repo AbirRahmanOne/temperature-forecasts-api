@@ -10,14 +10,14 @@ def fetch_forecast_data(lang, long):
 
     hourly_temp_data = forecast_data_json['hourly']['temperature_2m']
 
-    temp_list_at_2m = []
+    temp_list_at_2pm = []
     day = 14
     for i in range(7):
         if i != 0:
             day += 24
-        temp_list_at_2m.append(hourly_temp_data[day])
+        temp_list_at_2pm.append(hourly_temp_data[day])
 
-    return temp_list_at_2m
+    return temp_list_at_2pm
 
 
 def fetch_next_seven_days_forecast_data():
@@ -31,3 +31,21 @@ def fetch_next_seven_days_forecast_data():
         coolest_ten_dis.append({"district_name": district.name, "avg_temp": avg_temp})
 
     return coolest_ten_dis
+
+
+
+def fetch_forecast_data_day_wise(lang, long, day):
+    base_url = f"https://api.open-meteo.com/v1/forecast?latitude={lang}&longitude={long}&hourly=temperature_2m&current_weather=true&day={day}"
+    response = urlopen(base_url)
+    forecast_data_json = json.loads(response.read())
+
+    hourly_temp_data = forecast_data_json['hourly']['temperature_2m']
+
+    temp_list_at_2pm = []
+    day = 14
+    for i in range(7):
+        if i != 0:
+            day += 24
+        temp_list_at_2pm.append(hourly_temp_data[day])
+
+    return temp_list_at_2pm
